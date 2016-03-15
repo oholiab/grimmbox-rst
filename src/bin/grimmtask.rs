@@ -41,6 +41,7 @@ fn main() {
              Color::Black,
              Color::White,
              "Hello, world!");
+    gb.drawBox(1, 1, 10, 5, Color::White, Color::Black);
     gb.render();
     loop {
         match gb.poll_event(false) {
