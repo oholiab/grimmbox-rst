@@ -12,7 +12,7 @@ use std::os::unix::io::{FromRawFd, AsRawFd};
 // use std::error::Error;
 
 use rustbox::{Color, InitOptions, InputMode};
-// use grimmbox::GrimmBox;
+use grimmbox::grimmbox::{GrimmBox, GrimmBoxes};
 use rustbox::Key;
 
 const STDOUT: i32 = 1;
@@ -30,13 +30,32 @@ fn main() {
         buffer_stderr: false,
     };
 
-    let gb = match ::grimmbox::GrimmBox::init(initoptions) {
+    let gb = match GrimmBox::init(initoptions) {
         Result::Ok(v) => v,
         Result::Err(e) => panic!("{}", e),
     };
 
-
-
+    gb.print(1,
+             1,
+             rustbox::RB_BOLD,
+             Color::Black,
+             Color::White,
+             "Hello, world!");
+    gb.render();
+    loop {
+        match gb.poll_event(false) {
+            Ok(rustbox::Event::KeyEvent(key)) => {
+                match key {
+                    Key::Ctrl('c') => {
+                        break;
+                    }
+                    _ => {}
+                }
+            }
+            Err(e) => panic!("{}", e),
+            _ => {}
+        }
+    }
 
     // Test log redirect
     error!("Hello, stdout rustbox!");
