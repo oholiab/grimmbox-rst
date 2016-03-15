@@ -1,15 +1,29 @@
 extern crate rustbox;
 
-use rustbox::RustBox;
+use self::rustbox::RustBox;
 
-type Grimmbox = RustBox;
 
-trait Grimmboxes {
+// Needs putting back in:
+// pub type GrimmBox = RustBox;
+
+pub struct GrimmBox;
+
+trait Test {
+    fn present(&self);
+}
+
+trait GrimmBoxes {
     fn render(&self);
 }
 
-impl Grimmboxes for Grimmbox {
+impl GrimmBoxes for GrimmBox {
     fn render(&self) {
         self.present();
+    }
+}
+
+impl Test for GrimmBox {
+    fn present(&self) {
+        info!("presenting");
     }
 }
