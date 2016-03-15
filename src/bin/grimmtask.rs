@@ -12,7 +12,7 @@ use std::os::unix::io::{FromRawFd, AsRawFd};
 // use std::error::Error;
 
 use rustbox::{Color, InitOptions, InputMode};
-use grimmbox::grimmbox::{GrimmBox, GrimmBoxes};
+use grimmbox::{GrimmBox, GrimmBoxes};
 use rustbox::Key;
 
 const STDOUT: i32 = 1;
