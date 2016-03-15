@@ -8,16 +8,10 @@ extern crate grimmbox;
 
 use gag::Redirect;
 use std::fs::File;
-use std::os::unix::io::{FromRawFd, AsRawFd};
-// use std::error::Error;
 
 use rustbox::{Color, InitOptions, InputMode};
 use grimmbox::{GrimmBox, GrimmBoxes};
 use rustbox::Key;
-
-const STDOUT: i32 = 1;
-// const STDERR: i32 = 2;
-
 
 fn main() {
     // Initialise log redirect
@@ -25,7 +19,7 @@ fn main() {
     env_logger::init().unwrap();
     let redirect = Redirect::stderr(logfile);
 
-    let initoptions = rustbox::InitOptions {
+    let initoptions = InitOptions {
         input_mode: InputMode::Current,
         buffer_stderr: false,
     };

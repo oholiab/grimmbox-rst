@@ -22,24 +22,22 @@ impl GrimmBoxes for GrimmBox {
         self.present();
     }
     fn drawBox(&self, x: usize, y: usize, w: usize, h: usize, fg: Color, bg: Color) {
-        let tl = '.';
-        let tr = '.';
-        let bl = '.';
-        let br = '.';
-        let bottom = '-';
-        let side = '|';
+        let tl = '┌';
+        let tr = '┐';
+        let bl = '└';
+        let br = '┘';
+        let bottom = '─';
+        let side = '│';
         let corners: [[usize; 2]; 4] = [[x, y], [x + w, y], [x, y + h], [x + w, y + h]];
 
-        // 1 to 2
-        (corners[0][X]..corners[1][X])
-            .map(|xx| self.print_char(xx, corners[0][Y], rustbox::RB_BOLD, fg, bg, bottom));
-        (1..10).map(|xx| self.print_char(xx, 4, rustbox::RB_BOLD, fg, bg, tl));
-        error!("did it work?");
-        (1..10).map(|xx| error!("{}", xx));
-
-        // 3 to 4
-        // 1 to 3
-        // 2 to 4
+        for xx in (corners[0][X]..corners[1][X]) {
+            self.print_char(xx, corners[0][Y], rustbox::RB_BOLD, fg, bg, bottom);
+            self.print_char(xx, corners[2][Y], rustbox::RB_BOLD, fg, bg, bottom);
+        }
+        for yy in (corners[0][Y]..corners[2][Y]) {
+            self.print_char(corners[0][X], yy, rustbox::RB_BOLD, fg, bg, side);
+            self.print_char(corners[1][X], yy, rustbox::RB_BOLD, fg, bg, side);
+        }
 
         for c in corners.iter() {
             self.print_char(c[X], c[Y], rustbox::RB_BOLD, fg, bg, tl);
