@@ -41,7 +41,7 @@ fn main() {
         match gb.poll_event(false) {
             Ok(rustbox::Event::KeyEvent(key)) => {
                 match key {
-                    Key::Ctrl('c') => {
+                    Key::Ctrl('c') | Key::Char('q') => {
                         break;
                     }
                     _ => {}
