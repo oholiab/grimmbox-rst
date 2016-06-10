@@ -29,8 +29,8 @@ pub trait GrimmBoxes {
                h: usize,
                fg: Color,
                bg: Color,
-               title: String,
-               body: String);
+               title: &str,
+               body: &str);
 }
 
 impl GrimmBoxes for GrimmBox {
@@ -86,8 +86,9 @@ impl GrimmBoxes for GrimmBox {
                h: usize,
                fg: Color,
                bg: Color,
-               title: String,
-               body: String) {
+               title: &str,
+               body: &str) {
         self.drawBox(x, y, w, h, fg, bg);
+        self.print(x + 1, y, rustbox::RB_BOLD, fg, bg, title);
     }
 }

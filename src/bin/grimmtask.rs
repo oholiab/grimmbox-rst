@@ -29,13 +29,14 @@ fn main() {
         Result::Err(e) => panic!("{}", e),
     };
 
-    gb.print(1,
-             1,
-             rustbox::RB_BOLD,
-             Color::Black,
-             Color::White,
-             "Hello, world!");
-    gb.drawBox(1, 1, 10, 5, Color::White, Color::Black);
+    gb.textBox(1,
+               1,
+               10,
+               5,
+               Color::White,
+               Color::Black,
+               "Hello, world!",
+               "stuff");
     gb.render();
     loop {
         match gb.poll_event(false) {
