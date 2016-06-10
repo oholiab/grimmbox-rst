@@ -22,6 +22,15 @@ pub struct Corner {
 pub trait GrimmBoxes {
     fn render(&self);
     fn drawBox(&self, x: usize, y: usize, w: usize, h: usize, fg: Color, bg: Color);
+    fn textBox(&self,
+               x: usize,
+               y: usize,
+               w: usize,
+               h: usize,
+               fg: Color,
+               bg: Color,
+               title: String,
+               body: String);
 }
 
 impl GrimmBoxes for GrimmBox {
@@ -56,11 +65,11 @@ impl GrimmBoxes for GrimmBox {
                                         Glyph: br,
                                     }];
 
-        for xx in (corners[0].X..corners[1].X) {
+        for xx in corners[0].X..corners[1].X {
             self.print_char(xx, corners[0].Y, rustbox::RB_BOLD, fg, bg, bottom);
             self.print_char(xx, corners[2].Y, rustbox::RB_BOLD, fg, bg, bottom);
         }
-        for yy in (corners[0].Y..corners[2].Y) {
+        for yy in corners[0].Y..corners[2].Y {
             self.print_char(corners[0].X, yy, rustbox::RB_BOLD, fg, bg, side);
             self.print_char(corners[1].X, yy, rustbox::RB_BOLD, fg, bg, side);
         }
@@ -69,5 +78,16 @@ impl GrimmBoxes for GrimmBox {
             self.print_char(c.X, c.Y, rustbox::RB_BOLD, fg, bg, c.Glyph);
         }
 
+    }
+    fn textBox(&self,
+               x: usize,
+               y: usize,
+               w: usize,
+               h: usize,
+               fg: Color,
+               bg: Color,
+               title: String,
+               body: String) {
+        self.drawBox(x, y, w, h, fg, bg);
     }
 }
