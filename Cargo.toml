@@ -2,9 +2,6 @@
 name = "grimmbox"
 version = "0.1.0"
 
-[[bin]]
-name = "grimmtask"
-
 [dependencies]
 gag = "*"
 log = "*"

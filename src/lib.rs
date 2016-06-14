@@ -89,6 +89,17 @@ impl GrimmBoxes for GrimmBox {
                title: &str,
                body: &str) {
         self.drawBox(x, y, w, h, fg, bg);
-        self.print(x + 1, y, rustbox::RB_BOLD, fg, bg, title);
+        let maxWidth = w - 2;
+        let print_title = shortenString(title, maxWidth);
+
+        self.print(x + 1, y, rustbox::RB_BOLD, fg, bg, print_title);
     }
+}
+
+fn shortenString(string: &str, len: usize) -> &str {
+    if string.len() > len {
+        return string.split_at(len).0;
+    } else {
+        return string;
+    };
 }
