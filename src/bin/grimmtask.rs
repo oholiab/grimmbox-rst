@@ -29,14 +29,14 @@ fn main() {
         Result::Err(e) => panic!("{}", e),
     };
 
-    gb.textBox(1,
-               1,
-               10,
-               5,
-               Color::White,
-               Color::Black,
-               "Hello, world!",
-               "stuff");
+    gb.text_box(1,
+                1,
+                10,
+                5,
+                Color::White,
+                Color::Black,
+                "Hello, world!",
+                "stuff");
     gb.render();
     loop {
         match gb.poll_event(false) {
