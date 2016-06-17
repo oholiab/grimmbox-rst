@@ -1,4 +1,6 @@
 fn main() {
     let msg = "Hello, world!";
-    println!("{}", msg.split_at(3).0);
+    let msg2 = "Hello w⛧rld!";
+    println!("{} has length {}", msg, msg.bytes().count());
+    println!("{} has length {}", msg2, msg2.bytes().count());
 }

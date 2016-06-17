@@ -1,9 +1,11 @@
 #[macro_use]
 extern crate log;
 extern crate rustbox;
+extern crate unicode_segmentation;
 
 use self::rustbox::RustBox;
 use self::rustbox::Color;
+use unicode_segmentation::UnicodeSegmentation;
 
 pub type GrimmBox = RustBox;
 
@@ -88,14 +90,22 @@ impl GrimmBoxes for GrimmBox {
         let max_width = w - 2;
         let print_title = shorten_string(title, max_width);
 
-        self.print(x + 1, y, rustbox::RB_BOLD, fg, bg, print_title);
+        self.print(x + 1, y, rustbox::RB_BOLD, fg, bg, &print_title);
     }
 }
 
-fn shorten_string(string: &str, len: usize) -> &str {
-    if string.len() > len {
-        return string.split_at(len).0;
-    } else {
-        return string;
-    };
+fn shorten_string(string: &str, len: usize) -> String {
+    // I wanted to do this by returning a slice of the previous string but unicode lol
+    let graphemes = UnicodeSegmentation::graphemes(string, true);
+    let mut return_string = "".to_string();
+    let mut acc = 0;
+    for g in graphemes {
+        if acc <= len {
+            return_string.push_str(g);
+            acc += 1;
+        } else {
+            break;
+        }
+    }
+    return return_string;
 }

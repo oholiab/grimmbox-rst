@@ -35,7 +35,7 @@ fn main() {
                 5,
                 Color::White,
                 Color::Black,
-                "Hello, world!",
+                "Hello, w⛧ rld!",
                 "stuff");
     gb.render();
     loop {
