@@ -31,12 +31,12 @@ fn main() {
 
     gb.text_box(1,
                 1,
-                10,
+                15,
                 5,
                 Color::White,
                 Color::Black,
                 "Hello, w⛧ rld!",
-                "stuff");
+                "stuff and then some things that are nice and not at all horrible");
     gb.render();
     loop {
         match gb.poll_event(false) {

@@ -91,6 +91,11 @@ impl GrimmBoxes for GrimmBox {
         let print_title = shorten_string(title, max_width);
 
         self.print(x + 1, y, rustbox::RB_BOLD, fg, bg, &print_title);
+        let mut y_print = y + 1;
+        for line in reflow_text(&body, w - 2, h - 2) {
+            self.print(x + 1, y_print, rustbox::RB_NORMAL, fg, bg, &line);
+            y_print += 1;
+        }
     }
 }
 
@@ -108,4 +113,28 @@ fn shorten_string(string: &str, len: usize) -> String {
         }
     }
     return return_string;
+}
+
+fn reflow_text(string: &str, width: usize, height: usize) -> Vec<String> {
+    let mut text = vec![];
+    let mut graphemes = UnicodeSegmentation::graphemes(string, true);
+    'all: for row in 0..height + 1 {
+        let mut line = "".to_string();
+        for col in 0..width + 1 {
+            match graphemes.next() {
+                Some(x) => {
+                    // if x == "\r\n" {
+                    //    continue;
+                    // }
+                    line.push_str(x);
+                }
+                None => {
+                    text.push(line);
+                    break 'all;
+                }
+            }
+        }
+        text.push(line);
+    }
+    return text;
 }
