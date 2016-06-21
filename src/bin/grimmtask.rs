@@ -14,6 +14,8 @@ use grimmbox::{GrimmBox, GrimmBoxes};
 use rustbox::Key;
 
 fn main() {
+    info!("Starting up");
+    let tasks_per_window = 5;
     // Initialise log redirect
     let logfile = File::create("./somelog.log").unwrap();
     env_logger::init().unwrap();
@@ -29,16 +31,30 @@ fn main() {
         Result::Err(e) => panic!("{}", e),
     };
 
-    gb.text_box(1,
-                1,
-                15,
-                5,
-                Color::White,
-                Color::Black,
-                "Hello, w⛧ rld!",
-                "stuff\n and then some things that are nice and not at all horrible");
-    gb.render();
     loop {
+        let box_inside_height = gb.height() - 4;
+        let box_inside_width = gb.width() - 4;
+        let task_height = box_inside_height / tasks_per_window;
+        gb.text_box(1,
+                    1,
+                    gb.width() - 2,
+                    gb.height() - 2,
+                    Color::White,
+                    Color::Black,
+                    "GRIMMT⛧ SK",
+                    "");
+        for i in 1..tasks_per_window + 1 {
+            gb.text_box(2,
+                        2 + (i - 1) * task_height,
+                        box_inside_width,
+                        task_height,
+                        Color::White,
+                        Color::Black,
+                        &format!("Task {}", i),
+                        "some crap");
+        }
+
+        gb.render();
         match gb.poll_event(false) {
             Ok(rustbox::Event::KeyEvent(key)) => {
                 match key {
@@ -54,6 +70,5 @@ fn main() {
     }
 
     // Test log redirect
-    error!("Hello, stdout rustbox!");
     drop(redirect);
 }
