@@ -36,7 +36,7 @@ fn main() {
                 Color::White,
                 Color::Black,
                 "Hello, w⛧ rld!",
-                "stuff and then some things that are nice and not at all horrible");
+                "stuff\n and then some things that are nice and not at all horrible");
     gb.render();
     loop {
         match gb.poll_event(false) {

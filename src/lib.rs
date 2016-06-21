@@ -122,12 +122,8 @@ fn reflow_text(string: &str, width: usize, height: usize) -> Vec<String> {
         let mut line = "".to_string();
         for col in 0..width + 1 {
             match graphemes.next() {
-                Some(x) => {
-                    // if x == "\r\n" {
-                    //    continue;
-                    // }
-                    line.push_str(x);
-                }
+                Some("\n") => break, 
+                Some(x) => line.push_str(x),
                 None => {
                     text.push(line);
                     break 'all;
