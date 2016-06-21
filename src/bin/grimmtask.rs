@@ -32,22 +32,22 @@ fn main() {
     };
 
     loop {
-        let box_inside_height = gb.height() - 4;
-        let box_inside_width = gb.width() - 4;
+        let box_inside_height = gb.height() - 3;
+        let box_inside_width = gb.width() - 3;
         let task_height = box_inside_height / tasks_per_window;
-        gb.text_box(1,
-                    1,
-                    gb.width() - 2,
-                    gb.height() - 2,
+        gb.text_box(0,
+                    0,
+                    gb.width() - 1,
+                    gb.height() - 1,
                     Color::White,
                     Color::Black,
                     "GRIMMT⛧ SK",
                     "");
-        for i in 1..tasks_per_window + 1 {
-            gb.text_box(2,
-                        2 + (i - 1) * task_height,
+        for i in 0..tasks_per_window {
+            gb.text_box(1,
+                        1 + i * task_height,
                         box_inside_width,
-                        task_height,
+                        task_height - 1,
                         Color::White,
                         Color::Black,
                         &format!("Task {}", i),
