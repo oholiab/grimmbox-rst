@@ -70,6 +70,9 @@ fn main() {
                     _ => {}
                 }
             }
+            Ok(rustbox::Event::ResizeEvent(_, _)) => {
+                gb.clear();
+            }
             Err(e) => panic!("{}", e),
             _ => {}
         }

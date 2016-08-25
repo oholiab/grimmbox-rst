@@ -29,6 +29,7 @@ pub trait GrimmBoxes {
                 bg: Color,
                 title: &str,
                 body: &str);
+    fn clear(&self);
 }
 
 impl GrimmBoxes for GrimmBox {
@@ -95,6 +96,13 @@ impl GrimmBoxes for GrimmBox {
         for line in reflow_text(&body, w - 2, h - 2) {
             self.print(x + 1, y_print, rustbox::RB_NORMAL, fg, bg, &line);
             y_print += 1;
+        }
+    }
+    fn clear(&self) {
+        for x in 0 as usize..self.width() {
+            for y in 0 as usize..self.height() {
+                self.print(x, y, rustbox::RB_NORMAL, Color::White, Color::Black, " ");
+            }
         }
     }
 }
