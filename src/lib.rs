@@ -133,13 +133,13 @@ fn reflow_text(string: &str, width: usize, height: usize) -> Vec<String> {
             match graphemes.next() {
                 Some("\n") => break, 
                 Some(" ") => {
-                    if line.len() + buf.len() < width {
+                    if line.len() + buf.len() < width + 1 {
                         line.push_str(&buf);
                     } else {
                         buf.push_str(" ");
                         break;
                     }
-                    if line.len() < width {
+                    if line.len() < width + 1 {
                         line.push_str(" ");
                     }
                     buf = "".to_string();
