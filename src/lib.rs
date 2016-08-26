@@ -15,11 +15,23 @@ pub struct Corner {
     glyph: char,
 }
 
+pub struct TextBox {
+    x: usize,
+    y: usize,
+    w: usize,
+    h: usize,
+    fg: Color,
+    bg: Color,
+    title: String,
+    body: String,
+}
+
 // In case you want anything else to GrimmBox like a GrimmBox does
 // (although mostly because it makes extending RustBox easier)
 pub trait GrimmBoxes {
     fn render(&self);
     fn draw_box(&self, x: usize, y: usize, w: usize, h: usize, fg: Color, bg: Color);
+    fn draw_text_box(&self, textbox: TextBox);
     fn text_box(&self,
                 x: usize,
                 y: usize,
@@ -28,7 +40,8 @@ pub trait GrimmBoxes {
                 fg: Color,
                 bg: Color,
                 title: &str,
-                body: &str);
+                body: &str)
+                -> TextBox;
     fn clear(&self);
 }
 
@@ -86,10 +99,31 @@ impl GrimmBoxes for GrimmBox {
                 fg: Color,
                 bg: Color,
                 title: &str,
-                body: &str) {
+                body: &str)
+                -> TextBox {
+        return TextBox {
+            x: x,
+            y: y,
+            w: w,
+            h: h,
+            fg: fg,
+            bg: bg,
+            title: title.to_string(),
+            body: body.to_string(),
+        };
+    }
+    fn draw_text_box(&self, textbox: TextBox) {
+        let x = textbox.x;
+        let y = textbox.y;
+        let w = textbox.w;
+        let h = textbox.h;
+        let fg = textbox.fg;
+        let bg = textbox.bg;
+        let title = textbox.title;
+        let body = textbox.body;
         self.draw_box(x, y, w, h, fg, bg);
         let max_width = w - 2;
-        let print_title = shorten_string(title, max_width);
+        let print_title = shorten_string(&title, max_width);
 
         self.print(x + 1, y, rustbox::RB_BOLD, fg, bg, &print_title);
         let mut y_print = y + 1;
