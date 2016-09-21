@@ -31,6 +31,15 @@ fn main() {
         Result::Err(e) => panic!("{}", e),
     };
 
+    let mut selectable = vec![];
+    selectable.push(gb.text_box(0,
+                                0,
+                                gb.width() - 1,
+                                gb.height() - 1,
+                                Color::White,
+                                Color::Black,
+                                "GRIMMT⛧ SK",
+                                ""));
     loop {
         let box_inside_height = gb.height() - 3;
         let box_inside_width = gb.width() - 3;
