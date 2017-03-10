@@ -15,9 +15,10 @@ pub struct Corner {
     glyph: char,
 }
 
+#[derive(Clone)]
 pub struct TextBoxMetadata {
-    fg: Color,
-    bg: Color,
+    pub fg: Color,
+    pub bg: Color,
     title: String,
     body: String,
 }
@@ -29,6 +30,7 @@ pub struct TextBox<'a> {
     h: usize,
     meta: &'a TextBoxMetadata,
 }
+
 
 // In case you want anything else to GrimmBox like a GrimmBox does
 // (although mostly because it makes extending RustBox easier)
