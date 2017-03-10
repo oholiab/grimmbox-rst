@@ -15,15 +15,19 @@ pub struct Corner {
     glyph: char,
 }
 
-pub struct TextBox {
-    x: usize,
-    y: usize,
-    w: usize,
-    h: usize,
+pub struct TextBoxMetadata {
     fg: Color,
     bg: Color,
     title: String,
     body: String,
+}
+
+pub struct TextBox<'a> {
+    x: usize,
+    y: usize,
+    w: usize,
+    h: usize,
+    meta: &'a TextBoxMetadata,
 }
 
 // In case you want anything else to GrimmBox like a GrimmBox does
@@ -32,16 +36,15 @@ pub trait GrimmBoxes {
     fn render(&self);
     fn draw_box(&self, x: usize, y: usize, w: usize, h: usize, fg: Color, bg: Color);
     fn draw_text_box(&self, textbox: TextBox);
-    fn text_box(&self,
-                x: usize,
-                y: usize,
-                w: usize,
-                h: usize,
-                fg: Color,
-                bg: Color,
-                title: &str,
-                body: &str)
-                -> TextBox;
+    fn text_box_meta(&self, fg: Color, bg: Color, title: &str, body: &str) -> TextBoxMetadata;
+
+    fn text_box<'a>(&self,
+                    x: usize,
+                    y: usize,
+                    w: usize,
+                    h: usize,
+                    meta: &'a TextBoxMetadata)
+                    -> TextBox<'a>;
     fn clear(&self);
 }
 
@@ -91,25 +94,27 @@ impl GrimmBoxes for GrimmBox {
         }
 
     }
-    fn text_box(&self,
-                x: usize,
-                y: usize,
-                w: usize,
-                h: usize,
-                fg: Color,
-                bg: Color,
-                title: &str,
-                body: &str)
-                -> TextBox {
+    fn text_box_meta(&self, fg: Color, bg: Color, title: &str, body: &str) -> TextBoxMetadata {
+        return TextBoxMetadata {
+            fg: fg,
+            bg: bg,
+            title: title.to_string(),
+            body: body.to_string(),
+        };
+    }
+    fn text_box<'a>(&self,
+                    x: usize,
+                    y: usize,
+                    w: usize,
+                    h: usize,
+                    meta: &'a TextBoxMetadata)
+                    -> TextBox<'a> {
         return TextBox {
             x: x,
             y: y,
             w: w,
             h: h,
-            fg: fg,
-            bg: bg,
-            title: title.to_string(),
-            body: body.to_string(),
+            meta: meta,
         };
     }
     fn draw_text_box(&self, textbox: TextBox) {
@@ -117,10 +122,10 @@ impl GrimmBoxes for GrimmBox {
         let y = textbox.y;
         let w = textbox.w;
         let h = textbox.h;
-        let fg = textbox.fg;
-        let bg = textbox.bg;
-        let title = textbox.title;
-        let body = textbox.body;
+        let fg = textbox.meta.fg;
+        let bg = textbox.meta.bg;
+        let title = &textbox.meta.title;
+        let body = &textbox.meta.body;
         self.draw_box(x, y, w, h, fg, bg);
         let max_width = w - 2;
         let print_title = shorten_string(&title, max_width);
