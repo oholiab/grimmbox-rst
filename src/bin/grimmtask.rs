@@ -53,7 +53,6 @@ fn main() {
         let box_inside_height = gb.height() - 3;
         let box_inside_width = gb.width() - 3;
         let task_height = box_inside_height / tasks_per_window;
-        let mut select_meta = gb.text_box_meta(Color::Yellow, Color::Black, "", "");
         gb.draw_text_box(gb.text_box(0, 0, gb.width() - 1, gb.height() - 1, &selectable[0]));
         for i in 0..tasks_per_window {
             if i == selected {
