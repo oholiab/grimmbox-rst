@@ -33,7 +33,7 @@ fn main() {
 
     let mut selectable = vec![];
     let mut selected = 0;
-    selectable.push(gb.text_box_meta(Color::White, Color::Black, "GRIMMT⛧ SK", ""));
+    let background = gb.text_box_meta(Color::White, Color::Black, "GRIMMT⛧ SK", "");
     for i in 0..tasks_per_window {
         selectable.push(gb.text_box_meta(Color::White,
                                          Color::Black,
@@ -53,10 +53,10 @@ fn main() {
         let box_inside_height = gb.height() - 3;
         let box_inside_width = gb.width() - 3;
         let task_height = box_inside_height / tasks_per_window;
-        gb.draw_text_box(gb.text_box(0, 0, gb.width() - 1, gb.height() - 1, &selectable[0]));
+        gb.draw_text_box(gb.text_box(0, 0, gb.width() - 1, gb.height() - 1, &background));
         for i in 0..tasks_per_window {
             if i == selected {
-                let mut hilighted = selectable[i + 1].clone();
+                let mut hilighted = selectable[i].clone();
                 hilighted.fg = Color::Yellow;
                 gb.draw_text_box(gb.text_box(1,
                                              1 + i * task_height,
@@ -68,7 +68,7 @@ fn main() {
                                              1 + i * task_height,
                                              box_inside_width,
                                              task_height - 1,
-                                             &selectable[i + 1]));
+                                             &selectable[i]));
             }
         }
 
@@ -80,7 +80,7 @@ fn main() {
                         break;
                     }
                     Key::Down | Key::Char('j') => {
-                        if selected < selectable.len() {
+                        if selected < selectable.len() - 1 {
                             selected += 1;
                         } else {
                             selected = 0;
@@ -90,7 +90,7 @@ fn main() {
                         if selected > 0 {
                             selected -= 1;
                         } else {
-                            selected = selectable.len();
+                            selected = selectable.len() - 1;
                         }
                     }
                     _ => {}
