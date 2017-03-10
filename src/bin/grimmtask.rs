@@ -87,6 +87,13 @@ fn main() {
                             selected = 0;
                         }
                     }
+                    Key::Up | Key::Char('k') => {
+                        if selected > 0 {
+                            selected -= 1;
+                        } else {
+                            selected = selectable.len();
+                        }
+                    }
                     _ => {}
                 }
             }
