@@ -33,6 +33,21 @@ fn main() {
 
     let mut selectable = vec![];
     selectable.push(gb.text_box_meta(Color::White, Color::Black, "GRIMMT⛧ SK", ""));
+    for i in 0..tasks_per_window {
+        selectable.push(gb.text_box_meta(Color::White,
+                                         Color::Black,
+                                         &format!("Task {}", i),
+                                         "e (1), but which allows backward movement in the file \
+                                          as well as forward movement.  Also, less does not \
+                                          have to read the entire input file before starting, \
+                                          so with large input files it starts up faster than \
+                                          text editors like vi (1).  Less uses termcap  (or  \
+                                          terminfo  on  some systems),  so  it can run on a \
+                                          variety of terminals.  There is even limited support \
+                                          for hardcopy terminals.  (On a hardcopy terminal, \
+                                          lines which should be printed at the top of the \
+                                          screen are"));
+    }
     loop {
         let box_inside_height = gb.height() - 3;
         let box_inside_width = gb.width() - 3;
@@ -43,24 +58,7 @@ fn main() {
                                          1 + i * task_height,
                                          box_inside_width,
                                          task_height - 1,
-                                         &gb.text_box_meta(Color::White,
-                                                           Color::Black,
-                                                           &format!("Task {}", i),
-                                                           "e (1), but which allows backward \
-                                                            movement in the file as well as \
-                                                            forward movement.  Also, less does \
-                                                            not have to read the entire input \
-                                                            file before starting, so with \
-                                                            large input files it starts up \
-                                                            faster than text editors like vi \
-                                                            (1).  Less uses termcap  (or  \
-                                                            terminfo  on  some systems),  so  \
-                                                            it can run on a variety of \
-                                                            terminals.  There is even limited \
-                                                            support for hardcopy terminals.  \
-                                                            (On a hardcopy terminal, lines \
-                                                            which should be printed at the top \
-                                                            of the screen are")));
+                                         &selectable[i + 1]));
         }
 
         gb.render();
